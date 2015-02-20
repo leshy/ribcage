@@ -23,18 +23,30 @@
   fs = require('fs');
 
   exports.init = function(env, callback) {
+    var getVersion, loadLegos;
     if (env == null) {
       env = {};
     }
     _.extend(env, {});
     env.root = path.dirname(require.main.filename);
     env.settings = loadSettings(env.root, env.settings);
-    return lego.loadLegos({
-      dir: h.path(env.root, 'node_modules'),
-      prefix: 'ribcage_',
-      env: env
-    }, function(err, data) {
-      return callback(null, env);
+    getVersion = function(callback) {
+      var gitrev;
+      gitrev = require('git-rev');
+      return gitrev.short(function(str) {
+        env.version = str;
+        return callback();
+      });
+    };
+    loadLegos = function(callback) {
+      return lego.loadLegos({
+        dir: h.path(env.root, 'node_modules'),
+        prefix: 'ribcage_',
+        env: env
+      }, callback);
+    };
+    return async.series([getVersion, loadLegos], function(err, data) {
+      return callback(err, env);
     });
   };
 

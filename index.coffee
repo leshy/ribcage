@@ -15,15 +15,22 @@ exports.init = (env = {}, callback) ->
     env.root = path.dirname require.main.filename # figure out app root folder
     
     env.settings = loadSettings(env.root, env.settings) # load settings from root folder
-
-    lego.loadLegos # load plugins from root folder node_modules
-        dir: h.path env.root, 'node_modules'
-        prefix: 'ribcage_'
-        env: env
-        , (err,data) ->
-            callback null, env
-
     
+    getVersion = (callback) ->
+        gitrev = require 'git-rev'
+        gitrev.short (str) ->
+            env.version = str
+            callback()
+
+    loadLegos = (callback) -> 
+        lego.loadLegos # load plugins from root folder node_modules
+            dir: h.path env.root, 'node_modules'
+            prefix: 'ribcage_'
+            env: env
+            , callback
+
+    async.series [getVersion, loadLegos], (err,data) ->
+        callback err, env
 
 loadSettings = (folder, settings = {})->
     # need to compile coffee?
