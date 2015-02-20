@@ -33,10 +33,13 @@ exports.init = (env = {}, callback) ->
         callback err, env
 
 loadSettings = (folder, settings = {})->
+    settingsJs = helpers.path(folder, 'settings.js')
+    
     # need to compile coffee?
     if fs.existsSync(settingsCoffee = helpers.path(folder, 'settings.coffee'))
-        fs.writeFileSync helpers.path(folder, 'settings.js'), CoffeeScript.compile String(fs.readFileSync settingsCoffee)
+        fs.writeFileSync settingsJs, CoffeeScript.compile String(fs.readFileSync settingsCoffee)
     # load file
-    if fs.existsSync(folder + '/settings.js') then _.extend settings, require('./settings').settings
+    console.log settingsJs
+    if fs.existsSync(settingsJs) then _.extend settings, require(settingsJs).settings
     return settings
 

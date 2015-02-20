@@ -51,15 +51,17 @@
   };
 
   loadSettings = function(folder, settings) {
-    var settingsCoffee;
+    var settingsCoffee, settingsJs;
     if (settings == null) {
       settings = {};
     }
+    settingsJs = helpers.path(folder, 'settings.js');
     if (fs.existsSync(settingsCoffee = helpers.path(folder, 'settings.coffee'))) {
-      fs.writeFileSync(helpers.path(folder, 'settings.js'), CoffeeScript.compile(String(fs.readFileSync(settingsCoffee))));
+      fs.writeFileSync(settingsJs, CoffeeScript.compile(String(fs.readFileSync(settingsCoffee))));
     }
-    if (fs.existsSync(folder + '/settings.js')) {
-      _.extend(settings, require('./settings').settings);
+    console.log(settingsJs);
+    if (fs.existsSync(settingsJs)) {
+      _.extend(settings, require(settingsJs).settings);
     }
     return settings;
   };
