@@ -5,34 +5,32 @@ async = require 'async'
 backbone = require 'backbone4000'
 colors = require 'colors'
 _ = require 'underscore'
-helpers = require 'helpers'
+helpers = h = require 'helpers'
 pluggy = require 'pluggy'
 fs = require 'fs'
 
-exports.init = (options = {}, callback) ->
-    env = options.env or {}
+exports.init = (env = {}, callback) ->
+    _.extend env, {}
 
-    env.root = path.dirname require.main.filename
+    env.root = path.dirname require.main.filename # figure out app root folder
     
-    env.settings = loadSettings(env.root, env.settings)
+    env.settings = loadSettings(env.root, env.settings) # load settings from root folder
 
-    console.log 'settings', env.settings
-    pluggy.loadPlugins
-        dir: env.root
-        prefix: 'ribcage'
+    pluggy.loadPlugins # load plugins from root folder node_modules
+        dir: h.path env.root, 'node_modules'
+        prefix: 'ribcage_'
         env: env
         , (err,data) ->
             console.log 'loadplugins res',err,data
+
 
 loadSettings = (folder, settings = {})->
     # need to compile coffee?
     if fs.existsSync(settingsCoffee = helpers.path(folder, 'settings.coffee'))
         fs.writeFileSync helpers.path(folder, 'settings.js'), CoffeeScript.compile String(fs.readFileSync settingsCoffee)
-
     # load file
     if fs.existsSync(folder + '/settings.js') then _.extend settings, require('./settings').settings
-
-    settings
+    return settings
 
 
 exports.init()
