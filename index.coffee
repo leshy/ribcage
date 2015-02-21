@@ -1,6 +1,5 @@
 path = require 'path'
 CoffeeScript = require 'coffee-script'
-logger = require 'logger2'
 async = require 'async'
 backbone = require 'backbone4000'
 colors = require 'colors'
