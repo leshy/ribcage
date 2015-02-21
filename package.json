@@ -21,9 +21,10 @@
     "backbone4000": "git://github.com/leshy/backbone4000.git",
     "coffee-script": "^1.9.1",
     "colors": "^1.0.3",
+    "git-rev": "^0.2.1",
     "helpers": "git://github.com/leshy/nodejs-helpers.git",
-    "logger2": "git://github.com/leshy/nodejs-logger2",
     "lego": "git://github.com/leshy/nodejs-lego.git",
+    "logger2": "git://github.com/leshy/nodejs-logger2",
     "underscore": "^1.8.1"
   }
 }
