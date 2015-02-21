@@ -23,7 +23,7 @@
     "colors": "^1.0.3",
     "helpers": "git://github.com/leshy/nodejs-helpers.git",
     "logger2": "git://github.com/leshy/nodejs-logger2",
-    "pluggy": "git://github.com/leshy/pluggy.git",
+    "lego": "git://github.com/leshy/lego.git",
     "underscore": "^1.8.1"
   }
 }
