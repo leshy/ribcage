@@ -4,7 +4,7 @@ async = require 'async'
 backbone = require 'backbone4000'
 colors = require 'colors'
 _ = require 'underscore'
-helpers = h = require 'helpers'
+h = require 'helpers'
 lego = require 'lego'
 fs = require 'fs'
 
@@ -32,13 +32,15 @@ exports.init = (env = {}, callback) ->
         callback err, env
 
 loadSettings = (folder, settings = {})->
-    settingsJs = helpers.path(folder, 'settings.js')
+    settingsJs = h.path(folder, 'settings.js')
     
     # need to compile coffee?
-    if fs.existsSync(settingsCoffee = helpers.path(folder, 'settings.coffee'))
+    if fs.existsSync(settingsCoffee = h.path(folder, 'settings.coffee'))
         fs.writeFileSync settingsJs, CoffeeScript.compile String(fs.readFileSync settingsCoffee)
     # load file
-    console.log settingsJs
-    if fs.existsSync(settingsJs) then _.extend settings, require(settingsJs).settings
+    if fs.existsSync(settingsJs) then h.extend settings, require(settingsJs).settings
+    
+    console.log settings
+    
     return settings
 
