@@ -25,6 +25,7 @@
     "helpers": "git://github.com/leshy/nodejs-helpers.git",
     "lego": "git://github.com/leshy/nodejs-lego.git",
     "logger2": "git://github.com/leshy/nodejs-logger2",
-    "underscore": "^1.8.1"
+    "underscore": "^1.8.3"
+
   }
 }
