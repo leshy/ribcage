@@ -7,6 +7,7 @@ _ = require 'underscore'
 h = require 'helpers'
 lego = require 'lego'
 fs = require 'fs'
+util = require 'util'
 
 exports.init = (env = {}, callback) ->
     _.extend env, {}
@@ -14,6 +15,8 @@ exports.init = (env = {}, callback) ->
     env.root = path.dirname require.main.filename # figure out app root folder
 
     env.settings = loadSettings(env.root, env.settings) # load settings from root folder
+
+    if not env.verboseInit? or env.verboseInit then console.log(util.inspect(env.settings, colors: true))
 
     getVersion = (callback) ->
         gitrev = require 'git-rev'
@@ -39,7 +42,5 @@ loadSettings = (folder, settings = {})->
         fs.writeFileSync settingsJs, CoffeeScript.compile String(fs.readFileSync settingsCoffee)
     # load file
     if fs.existsSync(settingsJs) then h.extend settings, require(settingsJs).settings
-
-    console.log settings
 
     return settings
