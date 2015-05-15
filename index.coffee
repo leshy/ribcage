@@ -16,7 +16,7 @@ exports.init = (env = {}, callback) ->
 
     env.settings = loadSettings(env.root, env.settings) # load settings from root folder
 
-    if not env.verboseInit? or env.verboseInit then console.log(util.inspect(env.settings, colors: true))
+    if not env.verboseInit? or env.verboseInit then console.log util.inspect env.settings, colors: true
 
     getVersion = (callback) ->
         gitrev = require 'git-rev'
@@ -41,6 +41,6 @@ loadSettings = (folder, settings = {})->
     if fs.existsSync(settingsCoffee = h.path(folder, 'settings.coffee'))
         fs.writeFileSync settingsJs, CoffeeScript.compile String(fs.readFileSync settingsCoffee)
     # load file
-    if fs.existsSync(settingsJs) then h.extend settings, require(settingsJs).settings
+    if fs.existsSync(settingsJs) then settings = h.extend settings, require(settingsJs).settings
 
     return settings

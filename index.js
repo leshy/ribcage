@@ -65,7 +65,7 @@
       fs.writeFileSync(settingsJs, CoffeeScript.compile(String(fs.readFileSync(settingsCoffee))));
     }
     if (fs.existsSync(settingsJs)) {
-      h.extend(settings, require(settingsJs).settings);
+      settings = h.extend(settings, require(settingsJs).settings);
     }
     return settings;
   };
