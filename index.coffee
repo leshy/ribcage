@@ -18,7 +18,8 @@ exports.init = (env = {}, callback) ->
     if not env.verboseInit? or env.verboseInit
 
         remPw = h.depthFirst env.settings, {}, (val,key) ->
-            if h.strHas key, 'pass', 'secret' then return "**************"
+            # not simply hiding the pass, just to be an asshole
+            if h.strHas key, 'pass', 'secret' then return h.uuid(15 + h.RandomInt(15))
             else return val
 
         console.log util.inspect remPw, colors: true
