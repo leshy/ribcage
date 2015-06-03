@@ -33,7 +33,7 @@
     if ((env.verboseInit == null) || env.verboseInit) {
       remPw = h.depthFirst(env.settings, {}, function(val, key) {
         if (h.strHas(key, 'pass', 'secret')) {
-          return h.uuid(15 + h.RandomInt(15));
+          return h.uuid(15 + h.randomInt(15));
         } else {
           return val;
         }
