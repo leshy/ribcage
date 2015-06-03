@@ -13,10 +13,15 @@ exports.init = (env = {}, callback) ->
     _.extend env, {}
 
     env.root = path.dirname require.main.filename # figure out app root folder
-
     env.settings = loadSettings(env.root, env.settings) # load settings from root folder
 
-    if not env.verboseInit? or env.verboseInit then console.log util.inspect env.settings, colors: true
+    if not env.verboseInit? or env.verboseInit
+
+        remPw = h.depthFirst env.settings, {}, (val,key) ->
+            if h.strHas key, 'pass', 'secret' then return "**************"
+            else return val
+
+        console.log util.inspect remPw, colors: true
 
     getVersion = (callback) ->
         gitrev = require 'git-rev'

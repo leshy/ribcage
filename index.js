@@ -23,7 +23,7 @@
   util = require('util');
 
   exports.init = function(env, callback) {
-    var getVersion, loadLegos;
+    var getVersion, loadLegos, remPw;
     if (env == null) {
       env = {};
     }
@@ -31,7 +31,14 @@
     env.root = path.dirname(require.main.filename);
     env.settings = loadSettings(env.root, env.settings);
     if ((env.verboseInit == null) || env.verboseInit) {
-      console.log(util.inspect(env.settings, {
+      remPw = h.depthFirst(env.settings, {}, function(val, key) {
+        if (h.strHas(key, 'pass', 'secret')) {
+          return "**************";
+        } else {
+          return val;
+        }
+      });
+      console.log(util.inspect(remPw, {
         colors: true
       }));
     }
