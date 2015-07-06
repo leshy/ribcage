@@ -32,7 +32,7 @@
     env.settings = loadSettings(env.root, env.settings);
     if ((env.verboseInit == null) || env.verboseInit) {
       remPw = h.depthFirst(env.settings, {}, function(val, key) {
-        if (h.strHas(key, 'pass', 'secret')) {
+        if (h.strHas(key, 'pass', 'secret', 'login')) {
           return h.uuid(15 + h.randomInt(15));
         } else {
           return val;

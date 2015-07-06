@@ -19,7 +19,7 @@ exports.init = (env = {}, callback) ->
 
         remPw = h.depthFirst env.settings, {}, (val,key) ->
             # not simply hiding the pass, just to be an asshole
-            if h.strHas key, 'pass', 'secret' then return h.uuid(15 + h.randomInt(15))
+            if h.strHas key, 'pass', 'secret', 'login' then return h.uuid(15 + h.randomInt(15))
             else return val
 
         console.log util.inspect remPw, colors: true
