@@ -19,7 +19,7 @@ exports.init = (env = {}, callback) ->
 
         remPw = h.depthFirst env.settings, {}, (val,key) ->
             # not simply hiding the pass, just to be an asshole
-            if h.strHas key, 'pass', 'secret', 'login' then return h.uuid(15 + h.randomInt(15))
+            if h.strHas key, 'pass', 'secret', 'login' then return h.uuid(15 + h.randomInt 15)
             else return val
 
         console.log util.inspect remPw, colors: true
@@ -38,7 +38,7 @@ exports.init = (env = {}, callback) ->
             , callback
 
     async.series [getVersion, loadLegos], (err,data) ->
-        callback err, env
+        callback err, _.last data
 
 loadSettings = (folder, settings = {})->
     settingsJs = h.path(folder, 'settings.js')
