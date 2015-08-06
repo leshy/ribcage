@@ -22,7 +22,7 @@ exports.init = (env = {}, callback) ->
             if h.strHas key, 'pass', 'secret', 'login' then return h.uuid(15 + h.randomInt 15)
             else return val
 
-        console.log util.inspect remPw, colors: true
+        if env.verbose then console.log util.inspect remPw, colors: true
 
     getVersion = (callback) ->
         gitrev = require 'git-rev'
@@ -32,13 +32,14 @@ exports.init = (env = {}, callback) ->
 
     loadLegos = (callback) ->
         lego.loadLegos # load plugins from root folder node_modules
+            verbose: env.verbose
             dir: h.path env.root, 'node_modules'
             prefix: 'ribcage_'
             env: env
             , callback
 
     async.series [getVersion, loadLegos], (err,data) ->
-        callback err, _.last data
+        callback err, env
 
 loadSettings = (folder, settings = {})->
     settingsJs = h.path(folder, 'settings.js')

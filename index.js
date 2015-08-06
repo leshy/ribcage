@@ -38,9 +38,11 @@
           return val;
         }
       });
-      console.log(util.inspect(remPw, {
-        colors: true
-      }));
+      if (env.verbose) {
+        console.log(util.inspect(remPw, {
+          colors: true
+        }));
+      }
     }
     getVersion = function(callback) {
       var gitrev;
@@ -52,13 +54,14 @@
     };
     loadLegos = function(callback) {
       return lego.loadLegos({
+        verbose: env.verbose,
         dir: h.path(env.root, 'node_modules'),
         prefix: 'ribcage_',
         env: env
       }, callback);
     };
     return async.series([getVersion, loadLegos], function(err, data) {
-      return callback(err, _.last(data));
+      return callback(err, env);
     });
   };
 
