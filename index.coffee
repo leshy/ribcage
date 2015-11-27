@@ -15,14 +15,16 @@ exports.init = (env = {}, callback) ->
     env.root = path.dirname require.main.filename # figure out app root folder
     env.settings = loadSettings(env.root, env.settings) # load settings from root folder
 
-    if not env.verboseInit? or env.verboseInit
 
-        remPw = h.depthFirst env.settings, {}, (val,key) ->
-            # not simply hiding the pass, just to be an asshole
-            if h.strHas key, 'pass', 'secret', 'login' then return h.uuid(15 + h.randomInt 15)
-            else return val
 
-        if env.verbose then console.log util.inspect remPw, colors: true
+    if env.settings.verboseInit
+
+      remPw = h.depthFirst env.settings, {}, (val,key) ->
+          # not simply hiding the pass, just to be an asshole
+          if h.strHas key, 'pass', 'secret', 'login' then return h.uuid(15 + h.randomInt 15)
+          else return val
+
+      console.log util.inspect remPw, colors: true, depth: 4
 
     getVersion = (callback) ->
         gitrev = require 'git-rev'

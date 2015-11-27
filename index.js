@@ -30,7 +30,7 @@
     _.extend(env, {});
     env.root = path.dirname(require.main.filename);
     env.settings = loadSettings(env.root, env.settings);
-    if ((env.verboseInit == null) || env.verboseInit) {
+    if (env.settings.verboseInit) {
       remPw = h.depthFirst(env.settings, {}, function(val, key) {
         if (h.strHas(key, 'pass', 'secret', 'login')) {
           return h.uuid(15 + h.randomInt(15));
@@ -38,11 +38,10 @@
           return val;
         }
       });
-      if (env.verbose) {
-        console.log(util.inspect(remPw, {
-          colors: true
-        }));
-      }
+      console.log(util.inspect(remPw, {
+        colors: true,
+        depth: 4
+      }));
     }
     getVersion = function(callback) {
       var gitrev;
