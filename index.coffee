@@ -15,8 +15,6 @@ exports.init = (env = {}, callback) ->
     env.root = path.dirname require.main.filename # figure out app root folder
     env.settings = loadSettings(env.root, env.settings) # load settings from root folder
 
-
-
     if env.settings.verboseInit
 
       remPw = h.depthFirst env.settings, {}, (val,key) ->
