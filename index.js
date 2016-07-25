@@ -54,7 +54,7 @@
     loadLegos = function(callback) {
       return lego.loadLegos({
         verbose: env.verbose,
-        dir: h.path(env.root, 'node_modules'),
+        dir: env.settings.rootDir || h.path(env.root, 'node_modules'),
         prefix: 'ribcage_',
         env: env
       }, callback);

@@ -19,12 +19,11 @@
   "dependencies": {
     "async": "^0.9.0",
     "backbone4000": "git://github.com/leshy/backbone4000.git",
-    "coffee-script": "^1.9.1",
+    "coffee-script": "^1.10.0",
     "colors": "^1.0.3",
     "git-rev": "^0.2.1",
     "helpers": "git://github.com/leshy/nodejs-helpers.git",
     "lego": "git://github.com/leshy/nodejs-lego.git",
     "underscore": "^1.8.3"
-
   }
 }

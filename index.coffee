@@ -1,3 +1,4 @@
+# autocompile
 path = require 'path'
 CoffeeScript = require 'coffee-script'
 async = require 'async'
@@ -29,11 +30,10 @@ exports.init = (env = {}, callback) ->
         gitrev.short (str) ->
             env.version = str
             callback()
-
     loadLegos = (callback) ->
         lego.loadLegos # load plugins from root folder node_modules
             verbose: env.verbose
-            dir: h.path env.root, 'node_modules'
+            dir: env.settings.rootDir or h.path env.root, 'node_modules'
             prefix: 'ribcage_'
             env: env
             , callback
@@ -47,6 +47,7 @@ loadSettings = (folder, settings = {})->
     # need to compile coffee?
     if fs.existsSync(settingsCoffee = h.path(folder, 'settings.coffee'))
         fs.writeFileSync settingsJs, CoffeeScript.compile String(fs.readFileSync settingsCoffee)
+
     # load file
     if fs.existsSync(settingsJs) then settings = h.extend settings, require(settingsJs).settings
 
