@@ -1,6 +1,5 @@
 # autocompile
 path = require 'path'
-CoffeeScript = require 'coffee-script'
 async = require 'async'
 backbone = require 'backbone4000'
 colors = require 'colors'
@@ -9,6 +8,8 @@ h = require 'helpers'
 lego = require 'lego'
 fs = require 'fs'
 util = require 'util'
+LiveScript = require 'LiveScript'
+CoffeeScript = require 'coffee-script'
 
 exports.init = (env = {}, callback) ->
     _.extend env, {}
@@ -30,6 +31,7 @@ exports.init = (env = {}, callback) ->
         gitrev.short (str) ->
             env.version = str
             callback()
+
     loadLegos = (callback) ->
         lego.loadLegos # load plugins from root folder node_modules
             verbose: env.verbose
@@ -42,13 +44,11 @@ exports.init = (env = {}, callback) ->
         callback err, env
 
 loadSettings = (folder, settings = {})->
-    settingsJs = h.path(folder, 'settings.js')
+    settingsFile = h.path(folder, 'settings')
 
-    # need to compile coffee?
-    if fs.existsSync(settingsCoffee = h.path(folder, 'settings.coffee'))
-        fs.writeFileSync settingsJs, CoffeeScript.compile String(fs.readFileSync settingsCoffee)
-
-    # load file
-    if fs.existsSync(settingsJs) then settings = h.extend settings, require(settingsJs).settings
+    if fs.existsSync(settingsFile + ".js") or fs.existsSync(settingsFile + ".ls") or fs.existsSync(settingsFile + ".coffee")
+      fileSettings = require(settingsFile)
+      if fileSettings.settings? then fileSettings = fileSettings.settings
+      settings = h.extend settings, fileSettings
 
     return settings
