@@ -32,6 +32,7 @@
     _.extend(env, {});
     env.root = path.dirname(require.main.filename);
     env.settings = loadSettings(env.root, env.settings);
+    console.log('initializing', env.root);
     if (env.settings.verboseInit) {
       remPw = h.depthFirst(env.settings, {}, function(val, key) {
         if (h.strHas(key, 'pass', 'secret', 'login')) {
@@ -47,19 +48,25 @@
     }
     getVersion = function(callback) {
       var gitrev;
+      console.log('getver');
       gitrev = require('git-rev');
       return gitrev.short(function(str) {
+        console.log('getver done');
         env.version = str;
         return callback();
       });
     };
     loadLegos = function(callback) {
+      console.log('loadlegos');
       return lego.loadLegos({
         verbose: env.verbose,
         dir: env.settings.rootDir || h.path(env.root, 'node_modules'),
         prefix: 'ribcage_',
         env: env
-      }, callback);
+      }, function(err, data) {
+        console.log('loadlegos done');
+        return callback(err, data);
+      });
     };
     return async.series([getVersion, loadLegos], function(err, data) {
       return callback(err, env);

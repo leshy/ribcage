@@ -17,6 +17,8 @@ exports.init = (env = {}, callback) ->
     env.root = path.dirname require.main.filename # figure out app root folder
     env.settings = loadSettings(env.root, env.settings) # load settings from root folder
 
+    console.log 'initializing', env. root
+
     if env.settings.verboseInit
 
       remPw = h.depthFirst env.settings, {}, (val,key) ->
@@ -27,18 +29,23 @@ exports.init = (env = {}, callback) ->
       console.log util.inspect remPw, colors: true, depth: 4
 
     getVersion = (callback) ->
+        console.log 'getver'
         gitrev = require 'git-rev'
         gitrev.short (str) ->
+            console.log 'getver done'
             env.version = str
             callback()
 
     loadLegos = (callback) ->
+        console.log 'loadlegos'
         lego.loadLegos # load plugins from root folder node_modules
             verbose: env.verbose
             dir: env.settings.rootDir or h.path env.root, 'node_modules'
             prefix: 'ribcage_'
             env: env
-            , callback
+            , (err,data) ->
+              console.log 'loadlegos done'
+              callback err,data
 
     async.series [getVersion, loadLegos], (err,data) ->
         callback err, env
