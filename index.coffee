@@ -10,7 +10,7 @@ fs = require 'fs'
 util = require 'util'
 LiveScript = require 'LiveScript'
 CoffeeScript = require 'coffee-script'
-
+console.log "RIBCAGE LOADED"
 exports.init = (env = {}, callback) ->
     _.extend env, {}
 

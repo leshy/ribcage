@@ -24,6 +24,8 @@
 
   CoffeeScript = require('coffee-script');
 
+  console.log("RIBCAGE LOADED");
+
   exports.init = function(env, callback) {
     var getVersion, loadLegos, remPw;
     if (env == null) {
