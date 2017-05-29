@@ -1,4 +1,5 @@
 # autocompile
+
 path = require 'path'
 async = require 'async'
 backbone = require 'backbone4000'
@@ -34,14 +35,15 @@ exports.init = (env = {}, callback) ->
 
     loadLegos = (callback) ->
         lego.loadLegos # load plugins from root folder node_modules
-            verbose: env.verbose
+            verbose: env.settings.verboseInit
             dir: env.settings.rootDir or h.path env.root, 'node_modules'
             prefix: 'ribcage_'
             env: env
             , callback
 
     async.series [getVersion, loadLegos], (err,data) ->
-        callback err, env
+      if process.env.NODE_ENV is "production" then env.env = "prod" else env.env = "dev"
+      callback err, env
 
 loadSettings = (folder, settings = {})->
     settingsFile = h.path(folder, 'settings')

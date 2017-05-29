@@ -55,13 +55,18 @@
     };
     loadLegos = function(callback) {
       return lego.loadLegos({
-        verbose: env.verbose,
+        verbose: env.settings.verboseInit,
         dir: env.settings.rootDir || h.path(env.root, 'node_modules'),
         prefix: 'ribcage_',
         env: env
       }, callback);
     };
     return async.series([getVersion, loadLegos], function(err, data) {
+      if (process.env.NODE_ENV === "production") {
+        env.env = "prod";
+      } else {
+        env.env = "dev";
+      }
       return callback(err, env);
     });
   };
