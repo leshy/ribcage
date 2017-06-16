@@ -15,7 +15,14 @@ CoffeeScript = require 'coffee-script'
 exports.init = (env = {}, callback) ->
     _.extend env, {}
 
-    env.root = path.dirname require.main.filename # figure out app root folder
+    # should do this better, avoids mocha errors, good for now, investigate later.
+    rootCandidates = [
+      path.dirname require.main.filename
+      process.cwd() ]
+
+    rootDir = _.find rootCandidates, (dir) -> fs.existsSync path.join(dir, 'node_modules')
+
+    env.root = rootDir # figure out app root folder
     env.settings = loadSettings(env.root, env.settings) # load settings from root folder
 #    console.log env.root
     if env.settings.verboseInit

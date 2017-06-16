@@ -25,12 +25,16 @@
   CoffeeScript = require('coffee-script');
 
   exports.init = function(env, callback) {
-    var getVersion, loadLegos, remPw;
+    var getVersion, loadLegos, remPw, rootCandidates, rootDir;
     if (env == null) {
       env = {};
     }
     _.extend(env, {});
-    env.root = path.dirname(require.main.filename);
+    rootCandidates = [path.dirname(require.main.filename), process.cwd()];
+    rootDir = _.find(rootCandidates, function(dir) {
+      return fs.existsSync(path.join(dir, 'node_modules'));
+    });
+    env.root = rootDir;
     env.settings = loadSettings(env.root, env.settings);
     if (env.settings.verboseInit) {
       remPw = h.depthFirst(env.settings, {}, function(val, key) {
