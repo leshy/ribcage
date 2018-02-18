@@ -10,7 +10,7 @@ lego = require 'lego'
 fs = require 'fs'
 util = require 'util'
 LiveScript = require 'LiveScript'
-CoffeeScript = require 'coffee-script'
+CoffeeScript = require 'coffeescript'
 
 exports.init = (env = {}, callback) ->
     _.extend env, {}

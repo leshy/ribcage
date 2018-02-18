@@ -22,7 +22,7 @@
 
   LiveScript = require('LiveScript');
 
-  CoffeeScript = require('coffee-script');
+  CoffeeScript = require('coffeescript');
 
   exports.init = function(env, callback) {
     var getVersion, loadLegos, remPw, rootCandidates, rootDir;
