@@ -31,6 +31,10 @@ backbone@^1.1.2:
   dependencies:
     underscore ">=1.8.3"
 
+coffeescript@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/coffeescript/-/coffeescript-2.2.1.tgz#39fa2ac2e369f9bf0c651792e1f74552b4081b8e"
+
 colors@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
