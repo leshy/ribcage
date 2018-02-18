@@ -21,6 +21,7 @@
     "git-rev": "^0.2.1",
     "helpers": "git+ssh://git@github.com/leshy/nodejs-helpers.git",
     "lego": "git+ssh://git@github.com/leshy/nodejs-lego.git",
+    "livescript": "^1.5.0",
     "underscore": "^1.8.3"
   }
 }

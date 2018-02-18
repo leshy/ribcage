@@ -9,7 +9,7 @@ h = require 'helpers'
 lego = require 'lego'
 fs = require 'fs'
 util = require 'util'
-LiveScript = require 'LiveScript'
+LiveScript = require 'livescript'
 CoffeeScript = require 'coffeescript'
 
 exports.init = (env = {}, callback) ->

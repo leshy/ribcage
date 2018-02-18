@@ -20,7 +20,7 @@
 
   util = require('util');
 
-  LiveScript = require('LiveScript');
+  LiveScript = require('livescript');
 
   CoffeeScript = require('coffeescript');
 
